@@ -1,0 +1,38 @@
+# Database
+- Users
+  - id:int
+  - name:varchar
+  - occupation:varchar
+  - email: varchar
+  - password_hash: varchar
+  - avatar_file_name: varchar
+  - role: varchar
+  - created_at: datetime
+  - updated_at: datetime 
+- Campaign
+  - id: int
+  - name: varchar
+  - short_description: varchar
+  - description: text
+  - goal_amount: big_int
+  - current_amount: big_int
+  - perks: text
+  - backer_count: int
+  - slug: varchar
+  - created_at: datetime
+  - updated_at: datetime
+- Campaign  Images
+  - id: int
+  - campagin_id: int
+  - is_primary: boolean
+  - created_at: datetime
+  - updated_at: datetime
+- Transactions
+  - id: int
+  - campagin_id: int
+  - user_id: int
+  - amount: big int
+  - status: varchar
+  - code: varchar
+  - created_at: datetime
+  - updated_at: datetime
