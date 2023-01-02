@@ -8,8 +8,8 @@
 - [x] Register User API
 - [x] Login API
 - [X] Email check API
-- [ ] Upload Avatar API
-- [ ] JWT Authentication
+- [x] Upload Avatar API
+- [x] JWT Authentication
 - [ ] Authentication Middleware
 - [ ] Persiapan Campaign API
 - [ ] List Campaign API
