@@ -195,7 +195,9 @@ func (h *userHandler) UploadAvatar(c *gin.Context) {
 	}
 
 	// simpan gambarnya di folder "images/"
-	userID := 1
+	currentUser := c.MustGet("currentUser").(user.User)
+	userID := currentUser.ID
+
 	path := fmt.Sprintf("images/%d-%s", userID, file.Filename)
 	//di service kita panggil repo
 	err = c.SaveUploadedFile(file, path)
