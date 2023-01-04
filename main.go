@@ -6,7 +6,6 @@ import (
 	"crowdfounding/handler"
 	"crowdfounding/helper"
 	"crowdfounding/user"
-	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"log"
 	"net/http"
@@ -27,32 +26,38 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	campaignRepository := campaign.NewRepository(db)
-	campaigns, _ := campaignRepository.FindByUserID(2)
 
-	fmt.Println("------")
-	fmt.Println("-DEBUG-")
-	fmt.Println("------")
-	fmt.Println(len(campaigns))
-	for _, campaign := range campaigns {
-		fmt.Println(campaign.Name)
-		// testing
-		fmt.Printf("Jumlah gambar : %d\n", len(campaign.CampaignImages))
-		if len(campaign.CampaignImages) > 0 {
-			if len(campaign.CampaignImages) == 1 {
-				fmt.Println(campaign.CampaignImages[0].FileName)
-			} else {
-				for _, image := range campaign.CampaignImages {
-					fmt.Println(image.FileName)
-				}
-			}
-		}
-	}
-
-	fmt.Println("------")
-	fmt.Println("------")
+	//// hard testing
+	//campaigns, _ := campaignRepository.FindByUserID(2)
+	//fmt.Println("------")
+	//fmt.Println("-DEBUG-")
+	//fmt.Println("------")
+	//fmt.Println(len(campaigns))
+	//for _, campaign := range campaigns {
+	//	fmt.Println(campaign.Name)
+	//	// testing
+	//	fmt.Printf("Jumlah gambar : %d\n", len(campaign.CampaignImages))
+	//	if len(campaign.CampaignImages) > 0 {
+	//		if len(campaign.CampaignImages) == 1 {
+	//			fmt.Println(campaign.CampaignImages[0].FileName)
+	//		} else {
+	//			for _, image := range campaign.CampaignImages {
+	//				fmt.Println(image.FileName)
+	//			}
+	//		}
+	//	}
+	//}
+	//
+	//fmt.Println("------")
+	//fmt.Println("------")
 
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
+	campaignService := campaign.NewService(campaignRepository)
+
+	//// testing campaign service
+	//campaigns, _ := campaignService.FindCampaigns(0)
+	//fmt.Println(campaigns)
 
 	userHandler := handler.NewUserHandler(userService, authService)
 
