@@ -7,7 +7,10 @@
 
 ``go get -u gorm.io/gorm``
 
-lalu tentukan driver sql yang diinstal jika menggunakan mysql install menggunakan kode berikut
+- lalu tentukan driver sql yang diinstal jika menggunakan mysql install menggunakan kode berikut
 
 ``go get -u gorm.io/driver/mysql``
 
+- menggunakan plugin slug
+
+``go get -u github.com/gosimple/slug``

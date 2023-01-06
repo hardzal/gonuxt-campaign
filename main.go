@@ -59,6 +59,21 @@ func main() {
 	//campaigns, _ := campaignService.FindCampaigns(0)
 	//fmt.Println(campaigns)
 
+	// testing input
+	//input := campaign.CreateCampaignInput{}
+	//input.Name = "Penggalangan Dana Kemanusiaan"
+	//input.ShortDescription = "Menggalang dana"
+	//input.Description = "Dana dibutuhkan untuk hal yang berhubungan dengan bencana, mohon partisipasinya"
+	//input.GoalAmount = 1234567890
+	//input.Perks = "Mendapatkan pahala, rezeki lancar, mendapatkan perasaaan senang"
+	//
+	//inputUser, _ := userService.GetUserByID(1)
+	//input.User = inputUser
+	//
+	//_, err = campaignService.CreateCampaign(input)
+	//if err != nil {
+	//	log.Fatal(err.Error())
+	//}
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
 
@@ -79,6 +94,8 @@ func main() {
 	api.GET("/campaigns", campaignHandler.GetCampaigns)
 	// detail of campaign
 	api.GET("/campaign/:id", campaignHandler.GetCampaign)
+	// create a campaign
+	api.POST("/campaigns", authMiddleware(authService, userService), campaignHandler.CreateCampaign)
 	router.Run()
 
 }
