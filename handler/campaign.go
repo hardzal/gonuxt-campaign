@@ -126,6 +126,8 @@ func (h *campaignHandler) UpdateCampaign(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
+	currentUser := c.MustGet("currentUser").(user.User)
+	inputData.User = currentUser
 
 	updateCampaign, err := h.service.UpdateCampaign(campaignID, inputData)
 	if err != nil {

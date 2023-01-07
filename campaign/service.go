@@ -1,6 +1,7 @@
 package campaign
 
 import (
+	"errors"
 	"fmt"
 	"github.com/gosimple/slug"
 )
@@ -74,6 +75,10 @@ func (s *service) UpdateCampaign(campaignID GetCampaignDetailInput, inputData Cr
 		return campaign, err
 	}
 
+	if campaign.UserID != inputData.User.ID {
+		return campaign, errors.New("access forbidden")
+	}
+
 	campaign.Name = inputData.Name
 	campaign.ShortDescription = inputData.ShortDescription
 	campaign.Description = inputData.Description
@@ -81,7 +86,6 @@ func (s *service) UpdateCampaign(campaignID GetCampaignDetailInput, inputData Cr
 	campaign.GoalAmount = inputData.GoalAmount
 
 	updateCampaign, err := s.repository.Update(campaign)
-	fmt.Println(updateCampaign)
 	if err != nil {
 		return updateCampaign, err
 	}
