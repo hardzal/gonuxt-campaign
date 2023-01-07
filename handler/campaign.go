@@ -98,3 +98,42 @@ func (h *campaignHandler) CreateCampaign(c *gin.Context) {
 	response := helper.APIResponse("Success to create a campaign", http.StatusOK, "success", campaign.FormatCampaign(NewCampaign))
 	c.JSON(http.StatusOK, response)
 }
+
+// user masukkan input
+// handler
+// mapping dari input ke input struct
+// input dari user, termasuk input dari uri
+// service
+// repository update data campaign
+//func
+func (h *campaignHandler) UpdateCampaign(c *gin.Context) {
+	var campaignID campaign.GetCampaignDetailInput
+
+	err := c.ShouldBindUri(&campaignID)
+	if err != nil {
+		response := helper.APIResponse("Failed to update campaign", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	var inputData campaign.CreateCampaignInput
+	err = c.ShouldBindJSON(&inputData)
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+
+		response := helper.APIResponse("Failed to update campaign", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	updateCampaign, err := h.service.UpdateCampaign(campaignID, inputData)
+	if err != nil {
+		response := helper.APIResponse("Failed to update campaign", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("Success to update campaign", http.StatusOK, "success", campaign.FormatCampaign(updateCampaign))
+	c.JSON(http.StatusOK, response)
+}

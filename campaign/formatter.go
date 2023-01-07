@@ -22,6 +22,7 @@ func FormatCampaign(campaign Campaign) CampaignFormatter {
 	campaignFormatter.UserID = campaign.UserID
 	campaignFormatter.Name = campaign.Name
 	campaignFormatter.ShortDescription = campaign.ShortDescription
+	campaignFormatter.Description = campaign.Description
 	campaignFormatter.GoalAmount = campaign.GoalAmount
 	campaignFormatter.CurrentAmount = campaign.CurrentAmount
 	campaignFormatter.Slug = campaign.Slug

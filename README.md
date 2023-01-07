@@ -10,11 +10,11 @@
 - [X] Email check API
 - [x] Upload Avatar API
 - [x] JWT Authentication
-- [ ] Authentication Middleware
-- [ ] Persiapan Campaign API
-- [ ] List Campaign API
-- [ ] Campaign Detail API
-- [ ] Create Campaign API
+- [x] Authentication Middleware
+- [x] Persiapan Campaign API
+- [x] List Campaign API
+- [x] Campaign Detail API
+- [x] Create Campaign API
 - [ ] Update Campaign API
 - [ ] Upload Campaign Image API
 - [ ] Campaign Transaction API
