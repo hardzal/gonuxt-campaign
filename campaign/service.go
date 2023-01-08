@@ -11,6 +11,7 @@ type Service interface {
 	GetCampaignByID(input GetCampaignDetailInput) (Campaign, error)
 	CreateCampaign(input CreateCampaignInput) (Campaign, error)
 	UpdateCampaign(campaignID GetCampaignDetailInput, inputData CreateCampaignInput) (Campaign, error)
+	CreateCampaignImage(inputImage CreateCampaignImageInput, fileLocation string) (CampaignImage, error)
 }
 
 type service struct {
@@ -91,4 +92,37 @@ func (s *service) UpdateCampaign(campaignID GetCampaignDetailInput, inputData Cr
 	}
 
 	return updateCampaign, nil
+}
+
+// update image
+// Repository:
+//1. Create image/save data image ke dalam tabel campaign_images
+//2. Ubah is_primary true ke false
+// Service // Dengan kondisi memanggil point 2 pada repository, kemudian panggil repository pada poin 1
+// Save image campaign ke suatu folder
+// tangkap input dan ubah ke struct input
+// handler
+func (s *service) CreateCampaignImage(input CreateCampaignImageInput, fileLocation string) (CampaignImage, error) {
+	isPrimary := 0
+	if input.IsPrimary {
+
+		isPrimary = 1
+
+		_, err := s.repository.MarkAllImagesAsNonPrimary(input.CampaignID)
+		if err != nil {
+			return CampaignImage{}, err
+		}
+	}
+
+	campaignImage := CampaignImage{}
+	campaignImage.CampaignID = input.CampaignID
+	campaignImage.IsPrimary = isPrimary
+	campaignImage.FileName = fileLocation
+
+	newCampaignImage, err := s.repository.SaveImage(campaignImage)
+	if err != nil {
+		return newCampaignImage, err
+	}
+
+	return newCampaignImage, nil
 }
