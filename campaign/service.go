@@ -103,6 +103,14 @@ func (s *service) UpdateCampaign(campaignID GetCampaignDetailInput, inputData Cr
 // tangkap input dan ubah ke struct input
 // handler
 func (s *service) CreateCampaignImage(input CreateCampaignImageInput, fileLocation string) (CampaignImage, error) {
+	campaign, err := s.repository.FindByID(input.CampaignID)
+	if err != nil {
+		return CampaignImage{}, err
+	}
+
+	if campaign.UserID != input.User.ID {
+
+	}
 	isPrimary := 0
 	if input.IsPrimary {
 
