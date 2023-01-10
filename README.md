@@ -17,7 +17,7 @@
 - [x] Create Campaign API
 - [x] Update Campaign API
 - [x] Upload Campaign Image API
-- [ ] Campaign Transaction API
+- [x] Campaign Transaction API
 - [ ] User Transaction API
 
 
