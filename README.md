@@ -18,7 +18,7 @@
 - [x] Update Campaign API
 - [x] Upload Campaign Image API
 - [x] Campaign Transaction API
-- [ ] User Transaction API
+- [x] User Transaction API
 
 
 ## Proses FrontEnd
