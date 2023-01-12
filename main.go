@@ -5,6 +5,7 @@ import (
 	"crowdfounding/campaign"
 	"crowdfounding/handler"
 	"crowdfounding/helper"
+	"crowdfounding/transaction"
 	"crowdfounding/user"
 	"github.com/dgrijalva/jwt-go"
 	"log"
@@ -26,6 +27,7 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	campaignRepository := campaign.NewRepository(db)
+	transactionRepository := transaction.NewRepository(db)
 
 	//// hard testing
 	//campaigns, _ := campaignRepository.FindByUserID(2)
@@ -54,6 +56,7 @@ func main() {
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 	campaignService := campaign.NewService(campaignRepository)
+	transactionService := transaction.NewService(transactionRepository, campaignRepository)
 
 	//// testing campaign service
 	//campaigns, _ := campaignService.FindCampaigns(0)
@@ -76,6 +79,7 @@ func main() {
 	//}
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
+	transactionHandler := handler.NewTransactionHandler(transactionService)
 
 	router := gin.Default()
 
@@ -104,6 +108,7 @@ func main() {
 	api.POST("/campaign-images", authMiddleware(authService, userService), campaignHandler.UploadImage)
 
 	// transactions routes
+	api.GET("/campaigns/:id/transactions", authMiddleware(authService, userService), transactionHandler.GetCampaignTransactions)
 
 	router.Run()
 
@@ -143,14 +148,14 @@ func authMiddleware(authService auth.Service, userService user.Service) gin.Hand
 
 		userID := int(claim["user_id"].(float64))
 
-		user, err := userService.GetUserByID(userID)
+		userData, err := userService.GetUserByID(userID)
 		if err != nil {
 			response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
 			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
 			return
 		}
 
-		c.Set("currentUser", user)
+		c.Set("currentUser", userData)
 	}
 }
 
