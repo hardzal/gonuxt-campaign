@@ -90,6 +90,8 @@ func main() {
 	api.POST("/email_checkers", userHandler.CheckEmailAvailability)
 	// upload avatars
 	api.POST("/avatars", authMiddleware(authService, userService), userHandler.UploadAvatar)
+
+	// campaign routes
 	// show all campaigns
 	api.GET("/campaigns", campaignHandler.GetCampaigns)
 	// detail of campaign
@@ -100,6 +102,9 @@ func main() {
 	api.PUT("/campaigns/:id", authMiddleware(authService, userService), campaignHandler.UpdateCampaign)
 	// upload image campaign
 	api.POST("/campaign-images", authMiddleware(authService, userService), campaignHandler.UploadImage)
+
+	// transactions routes
+
 	router.Run()
 
 }
