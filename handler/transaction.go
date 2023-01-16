@@ -55,7 +55,7 @@ func (h *transactionsHandler) GetUserTransactions(c *gin.Context) {
 	currentUser := c.MustGet("currentUser").(user.User)
 	userID := currentUser.ID
 
-	transaction, err := h.service.GetTransactionByUserID(userID)
+	transactions, err := h.service.GetTransactionByUserID(userID)
 
 	if err != nil {
 		response := helper.APIResponse("Failed to get user's transactions", http.StatusBadRequest, "error", nil)
@@ -63,6 +63,6 @@ func (h *transactionsHandler) GetUserTransactions(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("User Transactions", http.StatusOK, "success", transaction)
+	response := helper.APIResponse("User Transactions", http.StatusOK, "success", transaction.FormatUserTransactions(transactions))
 	c.JSON(http.StatusOK, response)
 }
