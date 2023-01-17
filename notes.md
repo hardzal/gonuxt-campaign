@@ -31,3 +31,7 @@ https://martinfowler.com/articles/injection.html
 ``git rm --cached file.txt``
 
 ``git rm --cached ./dir/ -r``
+
+
+#### menggunakan repo midtrans
+``go get -u github.com/veritrans/go-midtrans``
