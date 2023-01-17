@@ -1,9 +1,8 @@
 package payment
 
 import (
-	"crowdfounding/transaction"
 	"crowdfounding/user"
-	"github.com/veritrans/go-midtrans"
+	midtrans "github.com/veritrans/go-midtrans"
 	"strconv"
 )
 
@@ -11,14 +10,14 @@ type service struct {
 }
 
 type Service interface {
-	GetToken(transaction transaction.Transaction, user user.User) (string, error)
+	GetPaymentURL(transaction Transaction, user user.User) (string, error)
 }
 
 func NewService() *service {
 	return &service{}
 }
 
-func (s *service) GetToken(transaction transaction.Transaction, user user.User) (string, error) {
+func (s *service) GetPaymentURL(transaction Transaction, user user.User) (string, error) {
 	midclient := midtrans.NewClient()
 	midclient.ServerKey = ""
 	midclient.ClientKey = ""

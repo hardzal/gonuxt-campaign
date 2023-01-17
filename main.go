@@ -5,6 +5,7 @@ import (
 	"crowdfounding/campaign"
 	"crowdfounding/handler"
 	"crowdfounding/helper"
+	"crowdfounding/payment"
 	"crowdfounding/transaction"
 	"crowdfounding/user"
 	"github.com/dgrijalva/jwt-go"
@@ -32,7 +33,8 @@ func main() {
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 	campaignService := campaign.NewService(campaignRepository)
-	transactionService := transaction.NewService(transactionRepository, campaignRepository)
+	paymentService := payment.NewService()
+	transactionService := transaction.NewService(transactionRepository, campaignRepository, paymentService)
 
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
