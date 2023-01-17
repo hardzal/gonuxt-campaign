@@ -25,3 +25,9 @@ https://martinfowler.com/articles/injection.html
    // Save image campaign ke suatu folder
    // tangkap input dan ubah ke struct input
    // handler
+
+#### deleted file in repository without delete in local system
+
+``git rm --cached file.txt``
+
+``git rm --cached ./dir/ -r``
