@@ -29,54 +29,11 @@ func main() {
 	campaignRepository := campaign.NewRepository(db)
 	transactionRepository := transaction.NewRepository(db)
 
-	//// hard testing
-	//campaigns, _ := campaignRepository.FindByUserID(2)
-	//fmt.Println("------")
-	//fmt.Println("-DEBUG-")
-	//fmt.Println("------")
-	//fmt.Println(len(campaigns))
-	//for _, campaign := range campaigns {
-	//	fmt.Println(campaign.Name)
-	//	// testing
-	//	fmt.Printf("Jumlah gambar : %d\n", len(campaign.CampaignImages))
-	//	if len(campaign.CampaignImages) > 0 {
-	//		if len(campaign.CampaignImages) == 1 {
-	//			fmt.Println(campaign.CampaignImages[0].FileName)
-	//		} else {
-	//			for _, image := range campaign.CampaignImages {
-	//				fmt.Println(image.FileName)
-	//			}
-	//		}
-	//	}
-	//}
-	//
-	//fmt.Println("------")
-	//fmt.Println("------")
-
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 	campaignService := campaign.NewService(campaignRepository)
 	transactionService := transaction.NewService(transactionRepository, campaignRepository)
 
-	//// testing campaign service
-	//campaigns, _ := campaignService.FindCampaigns(0)
-	//fmt.Println(campaigns)
-
-	// testing input
-	//input := campaign.CreateCampaignInput{}
-	//input.Name = "Penggalangan Dana Kemanusiaan"
-	//input.ShortDescription = "Menggalang dana"
-	//input.Description = "Dana dibutuhkan untuk hal yang berhubungan dengan bencana, mohon partisipasinya"
-	//input.GoalAmount = 1234567890
-	//input.Perks = "Mendapatkan pahala, rezeki lancar, mendapatkan perasaaan senang"
-	//
-	//inputUser, _ := userService.GetUserByID(1)
-	//input.User = inputUser
-	//
-	//_, err = campaignService.CreateCampaign(input)
-	//if err != nil {
-	//	log.Fatal(err.Error())
-	//}
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
 	transactionHandler := handler.NewTransactionHandler(transactionService)
@@ -112,7 +69,6 @@ func main() {
 	api.GET("/transactions", authMiddleware(authService, userService), transactionHandler.GetUserTransactions)
 	api.POST("transactions", authMiddleware(authService, userService), transactionHandler.CreateTransaction)
 	router.Run()
-
 }
 
 func authMiddleware(authService auth.Service, userService user.Service) gin.HandlerFunc {
