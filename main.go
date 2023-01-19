@@ -33,12 +33,12 @@ func main() {
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 	campaignService := campaign.NewService(campaignRepository)
-	paymentService := payment.NewService(transactionRepository, campaignRepository)
+	paymentService := payment.NewService()
 	transactionService := transaction.NewService(transactionRepository, campaignRepository, paymentService)
 
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
-	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService)
+	transactionHandler := handler.NewTransactionHandler(transactionService)
 
 	router := gin.Default()
 
@@ -118,46 +118,3 @@ func authMiddleware(authService auth.Service, userService user.Service) gin.Hand
 		c.Set("currentUser", userData)
 	}
 }
-
-// Middleware
-// ambil nilai header Authorization: Bearer tokentokentoken
-// dari header authorization, ambil nilai tokennya saja
-// lakukan validasi token
-// ambil nilai user_id
-// ambil user dari db berdasarkan user_id lewat service
-// set context isinya user
-
-///////////////////////////
-// fmt.Println("Connection database success")
-
-// var users []user.User
-// length := len(users)
-// fmt.Println(length)
-
-// db.Find(&users)
-// length = len(users)
-// fmt.Println(length)
-
-// router := gin.Default()
-// router.GET("/users", handler)
-// router.Run()
-
-// func handler(c *gin.Context) {
-// 	dsn := "root:@tcp(127.0.0.1:3306)/crowd_founding?charset=utf8mb4&parseTime=True&loc=Local"
-// 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
-// 	if err != nil {
-// 		log.Fatal(err.Error())
-// 	}
-
-// 	var users []user.User
-// 	db.Find(&users)
-
-// 	c.JSON(http.StatusOK, users)
-
-// 	// input
-// 	// handler mapping input ke struct
-// 	// service mapping ke struct user
-// 	// repostory save struct User ke db
-// 	// db
-// }

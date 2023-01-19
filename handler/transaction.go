@@ -2,7 +2,6 @@ package handler
 
 import (
 	"crowdfounding/helper"
-	"crowdfounding/payment"
 	"crowdfounding/transaction"
 	"crowdfounding/user"
 	"github.com/gin-gonic/gin"
@@ -15,12 +14,11 @@ import (
 // service, berbekal campaign id bisa digunakan untuk memanggil repo
 // repo mencari data transacation suatu campaign
 type transactionsHandler struct {
-	service        transaction.Service
-	paymentService payment.Service
+	service transaction.Service
 }
 
-func NewTransactionHandler(service transaction.Service, paymentService payment.Service) *transactionsHandler {
-	return &transactionsHandler{service, paymentService}
+func NewTransactionHandler(service transaction.Service) *transactionsHandler {
+	return &transactionsHandler{service}
 }
 
 func (h *transactionsHandler) GetCampaignTransactions(c *gin.Context) {
@@ -112,7 +110,7 @@ func (h *transactionsHandler) GetNotification(c *gin.Context) {
 		return
 	}
 
-	err = h.paymentService.ProcessPayment(input)
+	err = h.service.ProcessPayment(input)
 	if err != nil {
 		response := helper.APIResponse("Failed to process notification", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
