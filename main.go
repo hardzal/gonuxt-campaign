@@ -59,6 +59,8 @@ func main() {
 	api.POST("/email_checkers", userHandler.CheckEmailAvailability)
 	// upload avatars
 	api.POST("/avatars", authMiddleware(authService, userService), userHandler.UploadAvatar)
+	// mengambil user
+	api.GET("/users/fetch", authMiddleware(authService, userService), userHandler.FetchUser)
 
 	// campaign routes
 	// show all campaigns
