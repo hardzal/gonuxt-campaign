@@ -33,5 +33,12 @@ https://martinfowler.com/articles/injection.html
 ``git rm --cached ./dir/ -r``
 
 
-#### menggunakan repo midtrans
+#### menggunakan repo midtransw
 ``go get -u github.com/veritrans/go-midtrans``
+
+
+### Documentation Midtrans
+- https://docs.midtrans.com/en/technical-reference/sandbox-test?id=bank-transfer
+
+### Tambahkan URL Notification ke Midtrans 
+- Dalam hal saya menggunakan localhost online (free) aka Ngrok

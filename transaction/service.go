@@ -55,7 +55,7 @@ func (s *service) CreateTransaction(input CreateTransactionInput) (Transaction, 
 	transaction.CampaignID = input.CampaignID
 	transaction.Amount = input.Amount
 	transaction.UserID = input.User.ID
-	transaction.Status = "UNPAID"
+	transaction.Status = "pending"
 	transaction.Code = ""
 
 	newTransaction, err := s.repository.Save(transaction)

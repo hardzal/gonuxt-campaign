@@ -8,10 +8,11 @@ import (
 	"crowdfounding/payment"
 	"crowdfounding/transaction"
 	"crowdfounding/user"
-	"github.com/dgrijalva/jwt-go"
 	"log"
 	"net/http"
 	"strings"
+
+	"github.com/dgrijalva/jwt-go"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
@@ -45,6 +46,10 @@ func main() {
 	router.Static("/images", "./images")
 
 	api := router.Group("/api/v1")
+	api.GET("/welcome", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"message": "Succesfull!"})
+	})
+
 	// pendaftaran user
 	api.POST("/users", userHandler.RegisterUser)
 	// login user
@@ -69,7 +74,7 @@ func main() {
 	// transactions routes
 	api.GET("/campaigns/:id/transactions", authMiddleware(authService, userService), transactionHandler.GetCampaignTransactions)
 	api.GET("/transactions", authMiddleware(authService, userService), transactionHandler.GetUserTransactions)
-	api.POST("transactions", authMiddleware(authService, userService), transactionHandler.CreateTransaction)
+	api.POST("/transactions", authMiddleware(authService, userService), transactionHandler.CreateTransaction)
 	api.POST("/transactions/notification", transactionHandler.GetNotification)
 	router.Run()
 }
